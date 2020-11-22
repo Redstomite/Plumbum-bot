@@ -7,9 +7,13 @@ from discord.ext import commands
 from discord.ext.commands import has_permissions, MissingPermissions, CheckFailure, BadArgument
 import os.path
 
-TOKEN = "Nzc5NjgyOTAwMDY4MTM5MDI4.X7kGSQ.AgWDg_B1Wn6JGx5394xwHnMWebA"
-
+TOKEN = input("token: ")
 bot = commands.Bot(command_prefix='yo ')
+
+
+@bot.event
+async def on_ready():
+    print("up and running")
 
 
 @bot.command(name='dev', help="your developer")
@@ -32,7 +36,7 @@ async def setup(ctx, type):
             db.update({"message":str(msg.content), "channel":msg.channel.id}, argument.type=="welcome")
             await ctx.send("updated message")
         else:
-            db.insert({"type":"welcome", "channel":int(msg.channel.id), message:str(msg.content)})
+            db.insert({"type":"welcome", "channel":int(msg.channel.id), "message":str(msg.content)})
             await ctx.send("updated message")
 
 
@@ -49,7 +53,7 @@ async def warn(ctx, user: str, *, arg):
         await ctx.send(response)
 
 
-@bot.command(name='clear', help='clears channel')
+@bot.command(name='clear', help='clears channel, requires argument number')
 @has_permissions(administrator=True)
 async def clear(ctx, amount: int):
     response = str(amount) + " messages cleared"
