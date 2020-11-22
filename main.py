@@ -8,6 +8,7 @@ from discord.ext.commands import has_permissions, MissingPermissions, CheckFailu
 import os.path
 
 TOKEN = input("token: ")
+
 bot = commands.Bot(command_prefix='yo ')
 
 
