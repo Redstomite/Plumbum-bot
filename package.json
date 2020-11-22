@@ -1,0 +1,9 @@
+{
+  "name": "Plumbum-bot",
+  "version": "1.0.0",
+  "description": "All-in-one discord bot",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: No test specificed\" &&exit 1"
+  }
+}
