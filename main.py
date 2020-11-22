@@ -7,7 +7,7 @@ from discord.ext import commands
 from discord.ext.commands import has_permissions, MissingPermissions, CheckFailure, BadArgument
 import os.path
 
-TOKEN = "Nzc5NjgyOTAwMDY4MTM5MDI4.X7kGSQ.AgWDg_B1Wn6JGx5394xwHnMWebA"
+TOKEN = ""
 
 bot = commands.Bot(command_prefix='yo ')
 
