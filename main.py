@@ -1,6 +1,7 @@
 # bot.py
 import os
 import random
+from database_queries import query
 import discord.member
 import tinydb
 from discord.ext import commands
@@ -43,13 +44,8 @@ async def setup(ctx, type):
 @bot.command(name='warn', help='warns a user')
 @has_permissions(administrator=True)
 async def warn(ctx, user: str, arg: str):
-    print("init")
-    newpath = r'./database/'+ctx.message.guild.name
-    if not os.path.exists(newpath):
-        os.makedirs(newpath)
-    db = tinydb.TinyDB("./database/"+ctx.message.guild.name+"/warnings.json")
-    db.insert({"username": user, "reason":arg})
-    response = user + " has been warned for " + arg + " Don't be a bad boi."
+    query.warnUser(ctx.message.guild.name, user, arg)
+    response = user + " has been warned for (" + arg + "). Don't be a bad boi."
     await ctx.send(response)
 
 
@@ -69,11 +65,7 @@ async def warn_error(error, ctx):
 
 @bot.command(name='warnings', help="show all warnings a user has")
 async def warn(ctx, usr: str):
-    db = tinydb.TinyDB("./database/"+ctx.message.guild.name+"/warnings.json")
-    user = tinydb.Query()
-    warnings = db.search(user.username == usr)
-    number = len(warnings)
-    response = str(usr) + " has " + str(number)+ " warnings till date."
+    response = usr + "Has been warned " + query.getWarnings(ctx.message.guild.name, usr) + " times so far."
     await ctx.send(response)
 
 
