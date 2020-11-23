@@ -8,8 +8,7 @@ from discord.ext.commands import has_permissions, MissingPermissions, CheckFailu
 import os.path
 
 TOKEN = os.getenv("DISCORD_BOT_TOKEN")
-
-bot = commands.Bot(command_prefix='yo ')
+bot = commands.Bot(command_prefix='beta ')
 
 
 @bot.event
@@ -43,15 +42,15 @@ async def setup(ctx, type):
 
 @bot.command(name='warn', help='warns a user')
 @has_permissions(administrator=True)
-async def warn(ctx, user: str, *, arg):
-    if os.path.exists("./"+ctx.message.guild.name):
-        db = tinydb.TinyDB("./"+ctx.message.guild.name+"/warnings")
-        db.insert({"username": user, "reason":arg})
-        response = user + " has been warned for " + arg + "Don't be a bad boi."
-        await ctx.send(response)
-    else:
-        response = "You need to set up Plumbum first! Type yo setup"
-        await ctx.send(response)
+async def warn(ctx, user: str, arg: str):
+    print("init")
+    newpath = r'./database/'+ctx.message.guild.name
+    if not os.path.exists(newpath):
+        os.makedirs(newpath)
+    db = tinydb.TinyDB("./database/"+ctx.message.guild.name+"/warnings.json")
+    db.insert({"username": user, "reason":arg})
+    response = user + " has been warned for " + arg + " Don't be a bad boi."
+    await ctx.send(response)
 
 
 @bot.command(name='clear', help='clears channel, requires argument number')
