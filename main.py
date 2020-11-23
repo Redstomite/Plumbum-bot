@@ -69,7 +69,7 @@ async def warn_error(error, ctx):
 
 @bot.command(name='warnings', help="show all warnings a user has")
 async def warn(ctx, usr: str):
-    db = tinydb.TinyDB(ctx.message.guild.name)
+    db = tinydb.TinyDB("./database/"+ctx.message.guild.name+"/warnings.json")
     user = tinydb.Query()
     warnings = db.search(user.username == usr)
     number = len(warnings)
