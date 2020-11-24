@@ -54,8 +54,8 @@ async def warn(ctx, user: str, *args):
 @bot.command(name='clear', help='clears channel, requires argument number')
 @has_permissions(administrator=True)
 async def clear(ctx, amount: int):
-    response = str(amount) + " messages cleared"
-    await ctx.channel.purge(limit=amount)
+    response = str(amount) + " messages cleared by" + ctx.message.author+"."
+    await ctx.channel.purge(limit=amount+1)
     await ctx.send(response)
 
 
