@@ -13,13 +13,12 @@ class dbquery:
 
     def warnUser(self, server_name, user_id, reason):
         self.DBCheck(server_name)
-        if reason is None:
-            reason = "none given"
         db = tinydb.TinyDB("./database/" + server_name + "/warnings.json")
         db.insert({"username": user_id, "reason": reason})
 
     def getWarnings(self, server_name, user_id):
         Query = tinydb.Query()
+        print("yo")
         db = tinydb.TinyDB("./database/" + server_name + "/warnings.json")
         warnings = db.search(Query.username == user_id)
         numWarnings = len(warnings)

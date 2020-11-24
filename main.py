@@ -8,8 +8,8 @@ from discord.ext import commands
 from discord.ext.commands import has_permissions, MissingPermissions, CheckFailure, BadArgument
 import os.path
 
-TOKEN = os.getenv("DISCORD_BOT_TOKEN")
-bot = commands.Bot(command_prefix='yo ')
+TOKEN = "NzgwMDQxMTA5MjI4MzU1NTk2.X7pT5A.ZQC8-Lut0glXXY24wk7KCYGlcF8"
+bot = commands.Bot(command_prefix='beta ')
 
 
 @bot.event
@@ -43,9 +43,11 @@ async def setup(ctx, type):
 
 @bot.command(name='warn', help='warns a user')
 @has_permissions(administrator=True)
-async def warn(ctx, user: str, arg: str):
-    dbquery.warnUser(ctx.message.guild.name, user, arg)
-    response = user + " has been warned for (" + arg + "). Don't be a bad boi."
+async def warn(ctx, user: str, *args):
+    reason = " ".join(args[:])
+    h = dbquery()
+    h.warnUser(ctx.message.guild.name, user, reason)
+    response = user + " has been warned for (" + reason + "). Don't be a bad boi."
     await ctx.send(response)
 
 
@@ -64,10 +66,10 @@ async def warn_error(error, ctx):
 
 
 @bot.command(name='warnings', help="show all warnings a user has")
-async def warn(ctx, usr: str, *args):
-    reason = " ".join(args[:])
-    dbquery.warnUser(ctx.message.guild.name, usr, reason)
-    response = usr + "Has been warned " + dbquery.getWarnings(ctx.message.guild.name, usr) + " times so far."
+async def warn(ctx, usr: str):
+    h = dbquery()
+    numwarned = h.getWarnings(ctx.message.guild.name, usr)
+    response = usr + " has been warned " + str(numwarned) + " times so far."
     await ctx.send(response)
 
 
