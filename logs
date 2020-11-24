@@ -1,0 +1,2 @@
+patch 0.0.1 (11/24/20) [DEPLOYED]:
+Fixed Bug ID1, modularized database queries, added unit test for warn

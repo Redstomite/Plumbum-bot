@@ -1,5 +1,5 @@
 import unittest
-from database_queries import dbquery
+from db_queries import dbquery
 import tinydb
 
 

@@ -1,7 +1,7 @@
 # bot.py
 import os
 import random
-from database_queries import dbquery
+from db_queries import dbquery
 import discord.member
 import tinydb
 from discord.ext import commands
