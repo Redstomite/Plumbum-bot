@@ -31,7 +31,7 @@ async def setup(ctx, type):
         await ctx.send("Type out the welcome message you want to be displayed: (btw the welcome message will show in "
                        "this channel. If you dont want it displayed gere, go to the channel you desire.")
         msg = await bot.wait_for('message', timeout=30, check=lambda message: message.author == ctx.author)
-        db = tinydb.TinyDB("./db/"+ctx.message.guild.name+"/settings.json")
+        db = tinydb.TinyDB("./database/"+ctx.message.guild.name+"/settings.json")
         argument = tinydb.Query()
         if db.contains(argument.type == "welcome"):
             db.update({"message":str(msg.content), "channel":msg.channel.id}, argument.type=="welcome")
