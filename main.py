@@ -8,8 +8,8 @@ from discord.ext import commands
 from discord.ext.commands import has_permissions, MissingPermissions, CheckFailure, BadArgument
 import os.path
 
-TOKEN = "NzgwMDQxMTA5MjI4MzU1NTk2.X7pT5A.ZQC8-Lut0glXXY24wk7KCYGlcF8"
-bot = commands.Bot(command_prefix='beta ')
+TOKEN = os.getenv('DISCORD_BOT_TOKEN')
+bot = commands.Bot(command_prefix='yo ')
 
 
 @bot.event
