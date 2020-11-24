@@ -1,7 +1,7 @@
 # bot.py
 import os
 import random
-from database_queries import query
+from database_queries import dbquery
 import discord.member
 import tinydb
 from discord.ext import commands
@@ -44,7 +44,7 @@ async def setup(ctx, type):
 @bot.command(name='warn', help='warns a user')
 @has_permissions(administrator=True)
 async def warn(ctx, user: str, arg: str):
-    query.warnUser(ctx.message.guild.name, user, arg)
+    dbquery.warnUser(ctx.message.guild.name, user, arg)
     response = user + " has been warned for (" + arg + "). Don't be a bad boi."
     await ctx.send(response)
 
@@ -64,8 +64,10 @@ async def warn_error(error, ctx):
 
 
 @bot.command(name='warnings', help="show all warnings a user has")
-async def warn(ctx, usr: str):
-    response = usr + "Has been warned " + query.getWarnings(ctx.message.guild.name, usr) + " times so far."
+async def warn(ctx, usr: str, *args):
+    reason = " ".join(args[:])
+    dbquery.warnUser(ctx.message.guild.name, usr, reason)
+    response = usr + "Has been warned " + dbquery.getWarnings(ctx.message.guild.name, usr) + " times so far."
     await ctx.send(response)
 
 
