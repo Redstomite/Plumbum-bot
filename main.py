@@ -55,7 +55,7 @@ async def warn(ctx, user: discord.Member, *args):
 @bot.command(name='clear', help='clears channel, requires argument number')
 @has_permissions(administrator=True)
 async def clear(ctx, amount: int):
-    response = str(amount) + " messages cleared by" + str(ctx.message.author)+"."
+    response = str(amount) + " messages cleared by " + str(ctx.message.author)+"."
     await ctx.channel.purge(limit=amount+1)
     await ctx.send(response)
 
@@ -70,7 +70,7 @@ async def warn_error(error, ctx):
 async def warnings(ctx, usr: discord.Member):
     h = dbquery()
     numwarned, info = h.getWarnings(ctx.message.guild.name, str(usr))
-    response = usr + " has been warned " + str(numwarned) + " times so far. Here is why:" + info
+    response = str(usr) + " has been warned " + str(numwarned) + " times so far. Here is why:" + info
     await ctx.send(response)
 
 
@@ -78,6 +78,7 @@ async def warnings(ctx, usr: discord.Member):
 async def clearwarns(ctx, user: discord.Member):
     h = dbquery()
     h.clearwarns(ctx.message.guild.name, user)
+    await ctx.send('done, cleared warns for '+str(user))
 
 
 @bot.command(name='kick')
