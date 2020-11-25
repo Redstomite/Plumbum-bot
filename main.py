@@ -44,10 +44,13 @@ async def setup(ctx, type):
 @bot.command(name='warn', help='warns a user')
 @has_permissions(administrator=True)
 async def warn(ctx, user: discord.Member, *args):
+    print("1")
     reason = " ".join(args[:])
     h = dbquery()
     warner = ctx.message.author
+    print("2")
     h.warnUser(ctx.message.guild.name, user, reason, warner)
+    print("3")
     response = user + " has been warned for (" + reason + "). Don't be a bad boi."
     await ctx.send(response)
 
@@ -75,9 +78,9 @@ async def warnings(ctx, usr: discord.Member):
 
 
 @bot.command(name='clearwarns')
-async def clearwarns(ctx, user: discord.Member):
+async def clearwarns(ctx, user: discord.Member, number):
     h = dbquery()
-    h.clearwarns(ctx.message.guild.name, user)
+    h.clearwarns(ctx.message.guild.name, user, number)
     await ctx.send('done, cleared warns for '+str(user))
 
 
