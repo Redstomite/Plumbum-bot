@@ -77,7 +77,7 @@ async def warnings(ctx, usr: discord.Member):
 @bot.command(name='clearwarns')
 async def clearwarns(ctx, user: discord.Member):
     h = dbquery()
-    h.warnUser(ctx.message.guild.name, user)
+    h.clearwarns(ctx.message.guild.name, user)
 
 
 @bot.command(name='kick')
