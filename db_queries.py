@@ -20,9 +20,8 @@ class dbquery:
     def getWarnings(self, server_name, user_id):
         Query = tinydb.Query()
         self.DBCheck(server_name)
-        print("yo")
         db = tinydb.TinyDB("./database/" + server_name + "/warnings.json")
-        warnings = db.search(Query.username == user_id)
+        warnings = str(db.search(Query.username == user_id))
         numWarnings = len(warnings)
         return numWarnings, warnings
 
