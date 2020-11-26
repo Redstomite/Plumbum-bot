@@ -72,16 +72,35 @@ async def warn_error(error, ctx):
 @bot.command(name='warnings', help="show all warnings a user has")
 async def warnings(ctx, usr: discord.Member):
     h = dbquery()
-    numwarned, info = h.getWarnings(ctx.message.guild.name, str(usr))
-    response = str(usr) + " has been warned " + str(numwarned) + " times so far. Here is why:" + info
-    await ctx.send(response)
+    numwarned, instances = h.getWarnings(ctx.message.guild.name, str(usr))
+    if numwarned == 0:
+        response = str(usr) + " has not been warned so far."
+        await ctx.send(response)
+    else:
+        response = str(usr) + " has been warned " + str(numwarned) + " times so far. Here is why:"
+        await ctx.send(response)
+        i = 0
+        while True:
+            if i > 5 or not len(instances) == 0:
+                i += 1
+                if i > 5:
+                    break
+                lastwarn = instances.pop()
+                warner_lastwarned = lastwarn.get("warner")
+                reason_lastwarned = lastwarn.get("reason")
+                time_lastwarned = lastwarn.get("time")
+                response = str(i)+"     Reason: "+str(reason_lastwarned)+".  Warned by: " + str(warner_lastwarned) +\
+                           ".  Time: " + str(time_lastwarned)
+                await ctx.send(response)
+            else:
+                break
 
 
 @bot.command(name='clearwarns')
 async def clearwarns(ctx, user: discord.Member, number):
     h = dbquery()
     h.clearwarns(ctx.message.guild.name, user, number)
-    await ctx.send('done, cleared warns for '+str(user))
+    await ctx.send('done, cleared '+str(number) + " warnings for " +str(user))
 
 
 @bot.command(name='kick')

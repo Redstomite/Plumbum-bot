@@ -2,6 +2,7 @@ import os
 import tinydb
 from datetime import datetime
 
+
 class dbquery:
     def __init__(self):
         self.state = "statefarm"
@@ -17,14 +18,16 @@ class dbquery:
         now = datetime.now()
         nowstrft = now.strftime("%m/%d/%Y, %H:%M:%S")
         db.insert({"username": str(user_id), "reason": str(reason), "warner": str(warner), "time": nowstrft})
+        return None
 
     def getWarnings(self, server_name, user_id):
         Query = tinydb.Query()
         self.DBCheck(server_name)
         db = tinydb.TinyDB("./database/" + server_name + "/warnings.json")
-        warnings = str(db.search(Query.username == str(user_id)))
-        numWarnings = len(warnings)
-        return numWarnings, warnings
+        i = 0
+        instances = db.search(Query.username == str(user_id))
+        numwarned = len(instances)
+        return numwarned, instances
 
     def clearwarns(self, server_name, user_id, num):
         self.DBCheck(server_name)
